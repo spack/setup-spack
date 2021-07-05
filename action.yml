@@ -1,5 +1,5 @@
 name: 'Setup Spack'
-description: 'Setup spack and its dependencies'
+description: 'Setup Spack and its dependencies'
 inputs:
   runner:
     description: 'Runner os (ubuntu-18.04, ubuntu20.04)'
@@ -17,4 +17,7 @@ runs:
       run: |
         git clone --depth 5 https://github.com/spack/spack.git
         echo "$PWD/spack/bin" >> $GITHUB_PATH
+        mkdir ~/.spack
+        echo "config:"                > ~/.spack/config.yaml
+        echo "  concretizer: clingo" >> ~/.spack/config.yaml
       shell: bash
