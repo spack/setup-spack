@@ -19,6 +19,12 @@ jobs:
         ref:
         - develop
         - v0.16.2
+        concretizer:
+        - original
+        - clingo
+        exclude:
+        - ref: v0.16.2
+          concretizer: original
     
     steps:
       - uses: actions/checkout@v1.0.0
@@ -28,6 +34,7 @@ jobs:
         with:
           os: ${{ matrix.os }}
           ref: ${{ matrix.ref }}
+          concretizer: ${{ matrix.concretizer }}
       - run: spack --version
       - run: spack config blame config
       - run: spack install zlib
