@@ -21,7 +21,7 @@ jobs:
       - name: "Set up Spack"
         uses: haampie-spack/setup-spack@v1
         with:
-          runner: ${{ matrix.os }}
+          os: ${{ matrix.os }}
       - run: spack --version
       - run: spack install zlib
 ```
