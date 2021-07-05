@@ -5,7 +5,7 @@ on:
     branches: [rebuild-spack]
 
 jobs:
-  test:
+  build:
     name: Spack on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
@@ -34,4 +34,27 @@ jobs:
     - name: Install
       run: |
         SPACK_OPTIMIZATION_FLAGS=-Os ./spack/bin/spack -e . install -j3
+    - uses: actions/upload-artifact@v2
+      with:
+        name: spack-binaries-${{ runner.os }}
+        path: |
+          spack/
+          ~/.setup-spack
+  upload:
+    name: Upload results on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+        - ubuntu-20.04
+        - ubuntu-18.04
+        - macos-11
+        - macos-10.15
+    steps:
+    - uses: actions/download-artifact@v2
+      with:
+        name: spack-binaries-${{ runner.os }}
+    - name: Remove garbage
+      run: |
         ./spack/bin/spack -e . gc -y
