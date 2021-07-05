@@ -23,7 +23,7 @@ jobs:
     steps:
       - uses: actions/checkout@v1.0.0
       - name: Set up Spack
-        uses: haampie-spack/setup-spack@v1
+        uses: haampie-spack/setup-spack@v1.2.0
         with:
           os: ${{ matrix.os }}
           concretizer: ${{ matrix.concretizer }}
