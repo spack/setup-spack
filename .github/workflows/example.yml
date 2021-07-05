@@ -20,10 +20,11 @@ jobs:
     steps:
       - uses: actions/checkout@v1.0.0
 
-      - name: "Set up Spack"
+      - name: Set up Spack
         uses: ./
         with:
           os: ${{ matrix.os }}
+          ref: develop
       - run: spack --version
       - run: spack config blame config
       - run: spack install zlib

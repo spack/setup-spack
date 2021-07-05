@@ -1,9 +1,13 @@
-name: 'Setup Spack'
-description: 'Setup Spack and its dependencies'
+name: "Setup Spack"
+description: "Setup Spack and its dependencies"
 inputs:
   os:
-    description: 'Runner operating system (ubuntu-18.04, ubuntu20.04)'
+    description: "Operating system (ubuntu-18.04, ubuntu-20.04, macos-10.15)"
     required: true
+  ref:
+    description: "Version of Spack (develop, v0.16.2)"
+    required: false
+    default: develop
 runs:
   using: "composite"
   steps:
@@ -17,7 +21,8 @@ runs:
       shell: bash
     - name: Install Spack itself
       run: |
-        git clone --depth 2 https://github.com/spack/spack.git
+        git clone https://github.com/spack/spack.git
+        (cd spack && git checkout "${{ inputs.ref }}")
         echo "$PWD/spack/bin" >> $GITHUB_PATH
         mkdir ~/.spack
         echo "config:"                > ~/.spack/config.yaml

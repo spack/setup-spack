@@ -15,16 +15,21 @@ jobs:
         os:
         - ubuntu-18.04
         - ubuntu-20.04
+        - macos-10.15
 
     steps:
       - uses: actions/checkout@v1.0.0
-      - name: "Set up Spack"
+      - name: Set up Spack
         uses: haampie-spack/setup-spack@v1
         with:
           os: ${{ matrix.os }}
-      - run: spack --version
-      - run: spack install zlib
+          ref: develop
+      - run: |
+        spack --version
+        spack install zlib
 ```
+
+
 
 ## How is Spack bootstrapped?
 
