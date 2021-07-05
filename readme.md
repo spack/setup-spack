@@ -16,6 +16,9 @@ jobs:
         - ubuntu-18.04
         - ubuntu-20.04
         - macos-10.15
+        concretizer:
+        - original
+        - clingo
 
     steps:
       - uses: actions/checkout@v1.0.0
@@ -23,8 +26,7 @@ jobs:
         uses: haampie-spack/setup-spack@v1
         with:
           os: ${{ matrix.os }}
-          ref: develop
-          concretizer: clingo
+          concretizer: ${{ matrix.concretizer }}
       - run: |
         spack --version
         spack install zlib
