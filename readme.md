@@ -25,3 +25,16 @@ jobs:
       - run: spack --version
       - run: spack install zlib
 ```
+
+## How is Spack bootstrapped?
+
+This environment is built
+
+https://github.com/haampie-spack/setup-spack/blob/rebuild-spack/spack.yaml
+
+and the binaries are uploaded as release assets to
+
+https://github.com/haampie-spack/setup-spack/releases/tag/develop
+
+Todo:
+- [ ] Add checksum verification
