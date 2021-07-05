@@ -33,14 +33,10 @@ jobs:
     - name: Install
       run: |
         SPACK_OPTIMIZATION_FLAGS=-Os ./spack/bin/spack -e . install -j3
-    - name: Bundling
-      run: |
-        tar --use-compress-program zstd -T0 -cf spack-binaries.tar.zst -P ~/.setup-spack
     - uses: actions/upload-artifact@v2
       with:
         name: spack-binaries-${{ matrix.os }}
         path: |
-          spack-binaries.tar.zst
           spack.lock
   upload:
     name: Upload results on ${{ matrix.os }}
@@ -56,15 +52,11 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-    - uses: actions/download-artifact@v2
+    - name: Restore build cache
+      uses: actions/cache@v2
       with:
-        name: spack-binaries-${{ matrix.os }}
-    - name: Extract
-      run: |
-        mkdir ~/.setup-spack
-        TAR=tar
-        if [ "$RUNNER_OS" == macOS ]; then TAR=gtar; fi
-        $TAR --use-compress-program zstd -d -xf spack-binaries.tar.zst -P -C ~/.setup-spack
+        path: ~/.setup-spack
+        key: ${{ matrix.os }}-${{ hashFiles('spack.lock') }}
     - name: Remove garbage
       run: |
         git clone --depth 5 https://github.com/spack/spack.git
