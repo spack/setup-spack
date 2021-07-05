@@ -27,7 +27,7 @@ jobs:
           concretizer: clingo
       - run: |
         spack --version
-        spack install zlib
+        spack --debug install zlib
 ```
 
 ## Speeding up the builds
