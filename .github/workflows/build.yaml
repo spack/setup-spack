@@ -35,7 +35,7 @@ jobs:
         SPACK_OPTIMIZATION_FLAGS=-Os ./spack/bin/spack -e . install -j3
     - uses: actions/upload-artifact@v2
       with:
-        name: spack-binaries-${{ matrix.os }}
+        name: spack-lockfile-${{ matrix.os }}
         path: |
           spack.lock
   upload:
@@ -54,7 +54,7 @@ jobs:
       uses: actions/checkout@v2
     - uses: actions/download-artifact@v2
       with:
-        name: spack-binaries-${{ matrix.os }}
+        name: spack-lockfile-${{ matrix.os }}
     - name: Restore build cache
       uses: actions/cache@v2
       with:
@@ -66,7 +66,7 @@ jobs:
         ./spack/bin/spack -e . gc -y
     - name: Bundling
       run: |
-        tar --posix --use-compress-program zstd -T0 -cf ${{ matrix.os }}.tar.zst -P -C ~/.setup-spack
+        tar --posix --use-compress-program zstd -T0 -cf ${{ matrix.os }}.tar.zst -P ~/.setup-spack
     - name: Upload release assets
       run: .github/workflows/release.sh ${{ matrix.os }}.tar.zst
       env:
