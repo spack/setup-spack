@@ -1,6 +1,6 @@
 # Setup Spack in Github Actions
 
-Set up Spack with the new concretizer enabled by default.
+Set up the [Spack package manager](https://github.com/spack/spack).
 
 Example usage:
 
