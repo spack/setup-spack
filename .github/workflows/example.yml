@@ -22,9 +22,6 @@ jobs:
         concretizer:
         - original
         - clingo
-        exclude:
-        - ref: v0.16.2
-          concretizer: clingo
     
     steps:
       - uses: actions/checkout@v1.0.0
