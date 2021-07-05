@@ -1,4 +1,4 @@
-name: Example
+name: Development
 
 on:
   push:
@@ -36,25 +36,3 @@ jobs:
       - run: spack config blame config
       - run: spack --debug install zlib
       - run: which patchelf
-
-  latest-stable:
-    runs-on: ${{ matrix.os }}
-
-    strategy:
-      fail-fast: false
-      matrix:
-        os:
-        - ubuntu-18.04
-        - ubuntu-20.04
-        - macos-10.15
-
-    steps:
-      - uses: actions/checkout@v1.0.0
-
-      - name: Set up Spack
-        uses: haampie-spack/setup-spack@v1
-        with:
-          os: ${{ matrix.os }}
-          ref: develop
-          concretizer: clingo
-      - run: spack install zlib
