@@ -17,7 +17,7 @@ runs:
       shell: bash
     - name: Install Spack itself
       run: |
-        git clone --depth 5 https://github.com/spack/spack.git
+        git clone --depth 2 https://github.com/spack/spack.git
         echo "$PWD/spack/bin" >> $GITHUB_PATH
         mkdir ~/.spack
         echo "config:"                > ~/.spack/config.yaml
