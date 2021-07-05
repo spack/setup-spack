@@ -52,6 +52,9 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
+    - uses: actions/download-artifact@v2
+      with:
+        name: spack-binaries-${{ matrix.os }}
     - name: Restore build cache
       uses: actions/cache@v2
       with:
@@ -63,7 +66,7 @@ jobs:
         ./spack/bin/spack -e . gc -y
     - name: Bundling
       run: |
-        tar --use-compress-program zstd -cf ${{ matrix.os }}.tar.zst ~/.setup-spack
+        tar --posix --use-compress-program zstd -T0 -cf ${{ matrix.os }}.tar.zst -P -C ~/.setup-spack
     - name: Upload release assets
       run: .github/workflows/release.sh ${{ matrix.os }}.tar.zst
       env:
