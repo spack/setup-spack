@@ -1,27 +1,27 @@
-# Setup Spack in Github Actions
+name: Example
 
-Set up Spack with the new concretizer enabled by default.
+on:
+  push:
+    branches: ['main', 'release/*']
+  pull_request:
 
-Example usage:
-
-```yaml
 jobs:
-  build:
+  test:
     runs-on: ${{ matrix.os }}
 
     strategy:
       fail-fast: false
       matrix:
-        os:
-        - ubuntu-18.04
-        - ubuntu-20.04
-
+        os: [ubuntu-18.04, ubuntu-20.04]
+    
     steps:
       - uses: actions/checkout@v1.0.0
+
       - name: "Set up Spack"
-        uses: haampie-spack/setup-spack@v1
+        uses: ./
         with:
           os: ${{ matrix.os }}
       - run: spack --version
+      - run: spack config blame config
       - run: spack install zlib
-```
+      - run: which patchelf
