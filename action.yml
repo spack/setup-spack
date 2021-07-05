@@ -32,3 +32,6 @@ runs:
         echo "config:"                                   > ~/.spack/config.yaml
         echo "  concretizer: ${{ inputs.concretizer }}" >> ~/.spack/config.yaml
       shell: bash
+    - name: Show version
+      run: spack --version
+      shell: bash
