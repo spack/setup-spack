@@ -27,6 +27,7 @@ jobs:
         with:
           os: ${{ matrix.os }}
           concretizer: ${{ matrix.concretizer }}
+          ref: develop
       - run: |
         spack --version
         spack install zlib
