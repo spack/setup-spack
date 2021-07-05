@@ -58,7 +58,7 @@ jobs:
       uses: actions/checkout@v2
     - uses: actions/download-artifact@v2
       with:
-        name: spack-binaries-${{ runner.os }}
+        name: spack-binaries-${{ matrix.os }}
     - name: Extract
       run: |
         mkdir ~/.setup-spack
