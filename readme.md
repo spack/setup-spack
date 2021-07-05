@@ -2,7 +2,7 @@
 
 Set up the [Spack package manager](https://github.com/spack/spack).
 
-Example usage:
+## Example 1 (`spack install`)
 
 ```yaml
 jobs:
@@ -33,13 +33,50 @@ jobs:
         spack install zlib
 ```
 
-## Speeding up the builds
+## Example 2 (caching binaries)
 
-If you want fast builds make sure to:
+Assuming you have an environment file in `example-environment/spack.yaml`, you
+can enable caching by using the manifest file `spack.lock` as a hash key.
 
-- Fix spack itself on a particular commit (e.g. set `ref: [commit sha]`);
-- Build environments and use the lock file as the hash key (I'll add an example soon).
+```yaml
+jobs:
+  latest-stable:
+    runs-on: ${{ matrix.os }}
 
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+        - ubuntu-18.04
+        - ubuntu-20.04
+        - macos-10.15
+
+    steps:
+      - uses: actions/checkout@v1.0.0
+
+      - name: Set up Spack
+        uses: haampie-spack/setup-spack@v1.2.0
+        with:
+          os: ${{ matrix.os }}
+          ref: develop
+          concretizer: clingo
+
+      - name: Concretize environment
+        run: |
+          spack --color always -e ./example-environment concretize -f
+
+      - name: Restore Spack cache
+        uses: actions/cache@v2
+        with:
+          path: ~/.spack-ci
+          key: ${{ matrix.os }}-spack-${{ hashFiles('**/spack.lock') }}
+          restore-keys: |
+            ${{ matrix.os }}-spack
+
+      - name: Install environment
+        run: |
+          spack --color always -e ./example-environment install -j3 -v
+```
 
 ## How is Spack bootstrapped?
 
@@ -53,4 +90,3 @@ https://github.com/haampie-spack/setup-spack/releases/tag/develop
 
 Todo:
 - [ ] Add checksum verification
-- [ ] Add caching example
