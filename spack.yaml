@@ -6,9 +6,9 @@ spack:
   - py-boto3
   - python ~dbm ~libxml2
   view: ~/.setup-spack/view
-  install_tree:
-    root: ~/.setup-spack/opt
   config:
+    install_tree:
+      root: ~/.setup-spack/opt
     modules:
       enable: []
   packages:
