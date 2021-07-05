@@ -37,7 +37,7 @@ jobs:
       - run: spack --debug install zlib
       - run: which patchelf
 
-  test stable:
+  latest-stable:
     runs-on: ${{ matrix.os }}
 
     strategy:
