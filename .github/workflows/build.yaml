@@ -60,6 +60,10 @@ jobs:
       with:
         path: ~/.setup-spack
         key: ${{ matrix.os }}-${{ hashFiles('spack.lock') }}
+    - name: wut
+      run: |
+        ls ~/.setup-spack
+        realpath ~/.setup-spack
     - name: Remove garbage
       run: |
         git clone --depth 5 https://github.com/spack/spack.git
