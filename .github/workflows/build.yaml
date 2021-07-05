@@ -34,12 +34,15 @@ jobs:
     - name: Install
       run: |
         SPACK_OPTIMIZATION_FLAGS=-Os ./spack/bin/spack -e . install -j3
+    - name: Bundling
+      run: |
+        tar --use-compress-program zstd -cf spack-binaries.tar.zst ~/.setup-spack
     - uses: actions/upload-artifact@v2
       with:
         name: spack-binaries-${{ runner.os }}
         path: |
-          spack/
-          ~/.setup-spack
+          spack-binaries.tar.zst
+          spack.lock
   upload:
     name: Upload results on ${{ matrix.os }}
     needs: build
@@ -56,6 +59,11 @@ jobs:
     - uses: actions/download-artifact@v2
       with:
         name: spack-binaries-${{ runner.os }}
+    - name: Extract
+      run: |
+      mkdir ~/.setup-spack
+      tar --use-compress-program zstd -C ~/.setup-spack -xf spack-binaries.tar.zst
     - name: Remove garbage
       run: |
+        git clone --depth 5 https://github.com/spack/spack.git
         ./spack/bin/spack -e . gc -y
