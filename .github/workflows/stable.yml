@@ -26,4 +26,17 @@ jobs:
           os: ${{ matrix.os }}
           ref: develop
           concretizer: clingo
-      - run: spack install zlib
+
+      - name: Concretize environment
+        run: |
+          spack --color always -e ./example-environment concretize -f
+
+      - name: Restore Spack cache
+        uses: actions/cache@v2
+        with:
+          path: ~/.spack-ci
+          key: ${{ matrix.os }}-spack-${{ hashFiles('**/spack.lock') }}
+          restore-keys: |
+            ${{ matrix.os }}-spack
+        run: |
+          spack --color always -e ./example-environment install -j3 -v
