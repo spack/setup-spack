@@ -13,7 +13,7 @@ fi
 
 curl -fsS \
     -H "Accept: application/vnd.github.v3+json" \
-    https://github.com/haampie-spack/setup-spack/releases > release_info.json
+    https://api.github.com/repos/haampie-spack/setup-spack/releases > release_info.json
 
 # Get the release url
 release_id="$(< release_info.json jq -r '.[] | select(.tag_name=="develop") | .id')"

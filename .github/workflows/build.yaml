@@ -27,9 +27,9 @@ jobs:
       uses: actions/cache@v2
       with:
         path: ~/.setup-spack
-        key: ${{ runner.os }}-${{ hashFiles('spack.lock') }}
+        key: ${{ matrix.os }}-${{ hashFiles('spack.lock') }}
         restore-keys: |
-          ${{ runner.os }}-
+          ${{ matrix.os }}-
     - name: Install
       run: |
         SPACK_OPTIMIZATION_FLAGS=-Os ./spack/bin/spack -e . install -j3
@@ -38,7 +38,7 @@ jobs:
         tar --use-compress-program zstd -cf spack-binaries.tar.zst ~/.setup-spack
     - uses: actions/upload-artifact@v2
       with:
-        name: spack-binaries-${{ runner.os }}
+        name: spack-binaries-${{ matrix.os }}
         path: |
           spack-binaries.tar.zst
           spack.lock
