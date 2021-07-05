@@ -35,7 +35,7 @@ jobs:
         SPACK_OPTIMIZATION_FLAGS=-Os ./spack/bin/spack -e . install -j3
     - name: Bundling
       run: |
-        tar --use-compress-program zstd -cf spack-binaries.tar.zst ~/.setup-spack
+        tar --use-compress-program zstd -T0 -cf spack-binaries.tar.zst -P ~/.setup-spack
     - uses: actions/upload-artifact@v2
       with:
         name: spack-binaries-${{ matrix.os }}
@@ -64,7 +64,7 @@ jobs:
         mkdir ~/.setup-spack
         TAR=tar
         if [ "$RUNNER_OS" == macOS ]; then TAR=gtar; fi
-        $TAR --use-compress-program zstd -C ~/.setup-spack -xf spack-binaries.tar.zst
+        $TAR --use-compress-program zstd -d -xf spack-binaries.tar.zst -P -C ~/.setup-spack
     - name: Remove garbage
       run: |
         git clone --depth 5 https://github.com/spack/spack.git
