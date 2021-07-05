@@ -42,6 +42,7 @@ jobs:
           ~/.setup-spack
   upload:
     name: Upload results on ${{ matrix.os }}
+    needs: build
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
