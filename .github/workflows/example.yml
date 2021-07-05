@@ -24,7 +24,14 @@ jobs:
         - clingo
         exclude:
         - ref: v0.16.2
-          concretizer: original
+          concretizer: clingo
+          os: ubuntu-18.04
+        - ref: v0.16.2
+          concretizer: clingo
+          os: ubuntu-20.04
+        - ref: v0.16.2
+          concretizer: clingo
+          os: macos-10.15
     
     steps:
       - uses: actions/checkout@v1.0.0
