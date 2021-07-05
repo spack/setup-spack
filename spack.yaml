@@ -1,10 +1,7 @@
 spack:
   concretization: together
   specs:
-  - clingo-bootstrap@spack
-  - patchelf
-  - py-boto3
-  - python ~dbm ~libxml2
+  - zlib
   view: ~/.setup-spack/view
   config:
     source_cache: ~/.setup-spack/source_cache
