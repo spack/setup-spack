@@ -16,6 +16,9 @@ jobs:
         - ubuntu-18.04
         - ubuntu-20.04
         - macos-10.15
+        ref:
+        - develop
+        - v0.16.2
     
     steps:
       - uses: actions/checkout@v1.0.0
@@ -24,7 +27,7 @@ jobs:
         uses: ./
         with:
           os: ${{ matrix.os }}
-          ref: develop
+          ref: ${{ matrix.ref }}
       - run: spack --version
       - run: spack config blame config
       - run: spack install zlib
