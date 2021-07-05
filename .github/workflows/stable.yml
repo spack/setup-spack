@@ -38,5 +38,7 @@ jobs:
           key: ${{ matrix.os }}-spack-${{ hashFiles('**/spack.lock') }}
           restore-keys: |
             ${{ matrix.os }}-spack
+
+      - name: Install environment
         run: |
           spack --color always -e ./example-environment install -j3 -v
