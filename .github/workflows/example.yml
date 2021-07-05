@@ -1,0 +1,25 @@
+name: Example
+
+on:
+  push:
+    branches: ['main', 'release/*']
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-18.04, ubuntu-20.04]
+    
+    steps:
+      - uses: actions/checkout@v1.0.0
+
+      - name: "Set up Spack"
+        uses: ./
+        with:
+          runner: ${{ matrix.os }}
+      - run: spack --version
+      - run: spack install zlib
