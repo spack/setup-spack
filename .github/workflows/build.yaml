@@ -64,9 +64,10 @@ jobs:
       run: |
         git clone --depth 5 https://github.com/spack/spack.git
         ./spack/bin/spack -e . gc -y
+        ./spack/bin/spack -e . clean -a
     - name: Bundling
       run: |
-        tar --posix --use-compress-program zstd -T0 -cf ${{ matrix.os }}.tar.zst -P ~/.setup-spack
+        tar --posix --use-compress-program zstd -T0 -cf ${{ matrix.os }}.tar.zst ~/.setup-spack
     - name: Upload release assets
       run: .github/workflows/release.sh ${{ matrix.os }}.tar.zst
       env:
