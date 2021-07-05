@@ -8,6 +8,10 @@ inputs:
     description: "Version of Spack (develop, v0.16.2)"
     required: false
     default: develop
+  concretizer:
+    description: "Version of Spack (clingo, original)"
+    required: false
+    default: clingo
 runs:
   using: "composite"
   steps:
@@ -25,6 +29,9 @@ runs:
         (cd spack && git checkout "${{ inputs.ref }}")
         echo "$PWD/spack/bin" >> $GITHUB_PATH
         mkdir ~/.spack
-        echo "config:"                > ~/.spack/config.yaml
-        echo "  concretizer: clingo" >> ~/.spack/config.yaml
+        echo "config:"                                   > ~/.spack/config.yaml
+        echo "  concretizer: ${{ inputs.concretizer }}" >> ~/.spack/config.yaml
+      shell: bash
+    - name: Show version
+      run: spack --version
       shell: bash
