@@ -22,7 +22,7 @@ jobs:
     - name: Rebuild
       run: |
         git clone https://github.com/spack/spack.git
-        ./spack/bin/spack -e . concretize -
+        ./spack/bin/spack -e . concretize
     - name: Restore build cache
       uses: actions/cache@v2
       with:
