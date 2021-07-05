@@ -1,0 +1,17 @@
+spack:
+  concretization: together
+  specs:
+  - clingo-bootstrap@spack
+  - patchelf
+  - py-boto3
+  - python ~dbm ~libxml2
+  view: ~/.setup-spack/view
+  install_tree:
+    root: ~/.setup-spack/opt
+  config:
+    modules:
+      enable: []
+  packages:
+    all:
+      target:
+      - x86_64

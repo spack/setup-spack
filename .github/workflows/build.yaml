@@ -1,0 +1,25 @@
+name: CI
+
+on:
+  push:
+    branches: [rebuild-spack]
+
+jobs:
+  test:
+    name: Spack on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+        - ubuntu-20.04
+        - ubuntu-18.04
+        - macos-11
+        - macos-10.15
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Rebuild
+      run: |
+        git clone https://github.com/spack/spack.git
+        ./spack/bin/spack -e . concretize -
