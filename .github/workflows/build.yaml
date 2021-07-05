@@ -71,7 +71,7 @@ jobs:
         ./spack/bin/spack -e . clean -a
     - name: Bundling
       run: |
-        tar --use-compress-program zstd -T0 -cf ${{ matrix.os }}.tar.zst ~/.setup-spack
+        tar --use-compress-program="zstd -T0" -cf ${{ matrix.os }}.tar.zst ~/.setup-spack
     - name: Upload release assets
       run: .github/workflows/release.sh ${{ matrix.os }}.tar.zst
       env:
