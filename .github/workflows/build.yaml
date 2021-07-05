@@ -71,8 +71,8 @@ jobs:
         ./spack/bin/spack -e . gc -y
     - name: Bundling
       run: |
-        tar --use-compress-program zstd -cf ${{ runner.os }}.tar.zst ~/.setup-spack
+        tar --use-compress-program zstd -cf ${{ matrix.os }}.tar.zst ~/.setup-spack
     - name: Upload release assets
-      run: .github/workflows/release.sh ${{ runner.os }}.tar.zst
+      run: .github/workflows/release.sh ${{ matrix.os }}.tar.zst
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
