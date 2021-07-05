@@ -29,6 +29,12 @@ jobs:
         spack install zlib
 ```
 
+## Speeding up the builds
+
+If you want fast builds make sure to:
+
+- Fix spack itself on a particular commit (e.g. set `ref: [commit sha]`);
+- Build environments and use the lock file as the hash key (I'll add an example soon).
 
 
 ## How is Spack bootstrapped?
@@ -43,3 +49,4 @@ https://github.com/haampie-spack/setup-spack/releases/tag/develop
 
 Todo:
 - [ ] Add checksum verification
+- [ ] Add caching example
