@@ -10,7 +10,9 @@ runs:
     - name: Install Spack's dependencies
       run: |
         curl -LfSs -o spack.tar.zstd https://github.com/haampie-spack/setup-spack/releases/download/develop/${{ inputs.os }}.tar.zst
-        tar --use-compress-program="zstd" -xf spack.tar.zstd -C ~/
+        TAR=tar
+        if [ "$RUNNER_OS" == macOS ]; then TAR=gtar; fi
+        $TAR --use-compress-program=zstd -xf spack.tar.zstd -C ~/
         echo "$HOME/.setup-spack/view/bin" >> $GITHUB_PATH
       shell: bash
     - name: Install Spack itself
