@@ -22,4 +22,5 @@ jobs:
         with:
           runner: ${{ matrix.os }}
       - run: spack --version
+      - run: spack config blame config
       - run: spack install zlib
