@@ -26,7 +26,7 @@ jobs:
     - name: Restore build cache
       uses: actions/cache@v2
       with:
-        path: ~/.spack-ci
+        path: ~/.setup-spack
         key: ${{ runner.os }}-${{ hashFiles('spack.lock') }}
         restore-keys: |
           ${{ runner.os }}-
