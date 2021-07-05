@@ -24,6 +24,7 @@ jobs:
         with:
           os: ${{ matrix.os }}
           ref: develop
+          concretizer: clingo
       - run: |
         spack --version
         spack install zlib
