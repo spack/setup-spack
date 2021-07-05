@@ -61,8 +61,8 @@ jobs:
         name: spack-binaries-${{ runner.os }}
     - name: Extract
       run: |
-      mkdir ~/.setup-spack
-      tar --use-compress-program zstd -C ~/.setup-spack -xf spack-binaries.tar.zst
+        mkdir ~/.setup-spack
+        tar --use-compress-program zstd -C ~/.setup-spack -xf spack-binaries.tar.zst
     - name: Remove garbage
       run: |
         git clone --depth 5 https://github.com/spack/spack.git
