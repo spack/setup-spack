@@ -27,10 +27,14 @@ runs:
       path: ${{ inputs.path }}
       ref: ${{ inputs.ref }}
 
-  - name: Setup Spack
+  - name: Spack environment variables
     run: |
-      echo "$PWD/spack/bin" >> "$GITHUB_PATH"
+      echo "$(realpath ${{ inputs.path }}/bin)" >> "$GITHUB_PATH"
       [ "${{ inputs.color }}" = "true" ] && echo "SPACK_COLOR=always" >> "$GITHUB_ENV"
+    shell: sh
+
+  - name: Spack configuration
+    run: |
       if [ ${{ inputs.buildcache }} = "true" ]; then
         spack mirror add github-actions-buildcache oci://ghcr.io/spack/github-actions-buildcache
       fi
