@@ -14,13 +14,13 @@ jobs:
         - develop
         - releases/v0.21
     steps:
-      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
-      - name: Set up Spack
-        uses: ./
-        with:
-          ref: ${{ matrix.ref }}
-          buildcache: true
-          color: true
-      - run: spack --version
-      - run: spack config blame mirrors
-      - run: spack install --reuse --no-check-signature --cache-only python
+    - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+    - name: Set up Spack
+      uses: ./
+      with:
+        ref: ${{ matrix.ref }}
+        buildcache: true
+        color: true
+    - run: spack --version
+    - run: spack config blame mirrors
+    - run: spack install --reuse --no-check-signature --cache-only python
