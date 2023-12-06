@@ -3,7 +3,7 @@
 Set up the [Spack package manager](https://github.com/spack/spack) with a default build cache to
 speed up your actions.
 
-## Example 1 (`spack install`)
+## Example
 
 ```yaml
 jobs:
@@ -14,8 +14,8 @@ jobs:
       - name: Set up Spack
         uses: haampie-spack/setup-spack@v1.2.0
         with:
-          ref: develop  # default
-          buildcache: true  # default
+          ref: develop
+          buildcache: true
       - run: |
         spack --version
         spack install gmake

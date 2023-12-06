@@ -22,4 +22,4 @@ jobs:
           buildcache: true
       - run: spack --version
       - run: spack config blame mirrors
-      - run: spack install --reuse gmake
+      - run: spack --backtrace install --reuse gmake
