@@ -8,10 +8,18 @@ on:
 jobs:
   test:
     runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        ref:
+        - develop
+        - releases/v0.21
     steps:
       - uses: actions/checkout@v1.0.0
       - name: Set up Spack
         uses: ./
+        with:
+          ref: ${{ matrix.ref }}
+          buildcache: true
       - run: spack --version
       - run: spack config blame mirrors
-      - run: spack install --reuse --cache-only python
+      - run: spack install --reuse --no-check-signature --cache-only python
