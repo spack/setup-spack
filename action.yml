@@ -25,7 +25,7 @@ runs:
   using: "composite"
   steps:
   - name: Checkout Spack
-    uses: actions/checkout@v3
+    uses: actions/checkout@v4
     with:
       repository: spack/spack
       path: ${{ inputs.path }}
