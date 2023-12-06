@@ -14,4 +14,4 @@ jobs:
         uses: ./
       - run: spack --version
       - run: spack config blame mirrors
-      - run: spack --backtrace install --reuse gmake
+      - run: spack install --reuse --cache-only python
