@@ -12,7 +12,7 @@ jobs:
     steps:
     - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
     - name: Set up Spack
-      uses: haampie-spack/setup-spack@v2.0.0
+      uses: spack/setup-spack@v2
       with:
         ref: develop      # Spack version (examples: develop, releases/v0.21)
         buildcache: true  # Configure oci://ghcr.io/spack/github-actions-buildcache
