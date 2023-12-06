@@ -7,32 +7,19 @@ on:
 
 jobs:
   test:
-    runs-on: ${{ matrix.os }}
-
+    runs-on: ubuntu-22.04
     strategy:
-      fail-fast: false
       matrix:
-        os:
-        - ubuntu-18.04
-        - ubuntu-20.04
-        - macos-10.15
         ref:
         - develop
         - b35d6d13a7359f42abc1c468ea671fcc0daabffd
-        concretizer:
-        - original
-        - clingo
-
     steps:
       - uses: actions/checkout@v1.0.0
-
       - name: Set up Spack
         uses: ./
         with:
-          os: ${{ matrix.os }}
           ref: ${{ matrix.ref }}
-          concretizer: ${{ matrix.concretizer }}
+          buildcache: true
       - run: spack --version
-      - run: spack config blame config
-      - run: spack --debug install zlib
-      - run: which patchelf
+      - run: spack config blame mirrors
+      - run: spack install gmake

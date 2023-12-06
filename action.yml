@@ -1,37 +1,33 @@
 name: "Setup Spack"
-description: "Setup Spack and its dependencies"
+description: "Setup Spack"
 inputs:
-  os:
-    description: "Operating system (ubuntu-18.04, ubuntu-20.04, macos-10.15)"
-    required: true
   ref:
-    description: "Version of Spack (develop, v0.16.2)"
+    description: "Version of Spack (git ref: develop, releases/v0.21, ...)"
     required: false
     default: develop
-  concretizer:
-    description: "Version of Spack (clingo, original)"
+  buildcache:
+    description: "Enable the Github Action build cache"
     required: false
-    default: clingo
+    default: "true"
+  path:
+    description: "Path to Spack"
+    required: false
+    default: "spack"
 runs:
   using: "composite"
   steps:
-    - name: Install Spack's dependencies
-      run: |
-        curl -LfSs -o spack.tar.zstd https://github.com/haampie-spack/setup-spack/releases/download/develop/${{ inputs.os }}.tar.zst
-        TAR=tar
-        if [ "$RUNNER_OS" == macOS ]; then TAR=gtar; fi
-        $TAR --use-compress-program=zstd -xf spack.tar.zstd -C ~/
-        echo "$HOME/.setup-spack/view/bin" >> $GITHUB_PATH
-      shell: bash
-    - name: Install Spack itself
-      run: |
-        git clone https://github.com/spack/spack.git
-        (cd spack && git checkout "${{ inputs.ref }}")
-        echo "$PWD/spack/bin" >> $GITHUB_PATH
-        mkdir ~/.spack
-        echo "config:"                                   > ~/.spack/config.yaml
-        echo "  concretizer: ${{ inputs.concretizer }}" >> ~/.spack/config.yaml
-      shell: bash
-    - name: Show version
-      run: spack --version
-      shell: bash
+  - name: Checkout Spack
+    uses: actions/checkout@v3
+    with:
+      repository: spack/spack
+      path: ${{ inputs.path }}
+      ref: ${{ inputs.ref }}
+
+  - name: Setup Spack
+    run: echo "$PWD/spack/bin" >> "$GITHUB_PATH"
+    shell: sh
+
+  - name: Setup build cache
+    if: ${{ inputs.buildcache == 'true' }}
+    run: spack mirror add github-actions-buildcache oci://ghcr.io/spack/github-actions-buildcache
+    shell: sh
