@@ -10,11 +10,11 @@ inputs:
     required: false
     default: "true"
   color:
-    description: "Force color output"
+    description: "Force color output (sets SPACK_COLOR=always)"
     required: false
     default: "true"
   path:
-    description: "Path to Spack"
+    description: "Path to install Spack to"
     required: false
     default: "spack"
 runs:
