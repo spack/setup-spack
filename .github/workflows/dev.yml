@@ -12,7 +12,7 @@ jobs:
       matrix:
         ref:
         - develop
-        - b35d6d13a7359f42abc1c468ea671fcc0daabffd
+        - releases/v0.21
     steps:
       - uses: actions/checkout@v1.0.0
       - name: Set up Spack
@@ -22,4 +22,4 @@ jobs:
           buildcache: true
       - run: spack --version
       - run: spack config blame mirrors
-      - run: spack install gmake
+      - run: spack install --reuse gmake
