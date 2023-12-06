@@ -18,7 +18,7 @@ jobs:
           buildcache: true
       - run: |
         spack --version
-        spack install gmake
+        spack install python
 ```
 
 ## Caching your own binaries
