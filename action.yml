@@ -9,6 +9,10 @@ inputs:
     description: "Enable the Github Action build cache"
     required: false
     default: "true"
+  color:
+    description: "Force color output"
+    required: false
+    default: "true"
   path:
     description: "Path to Spack"
     required: false
@@ -24,10 +28,10 @@ runs:
       ref: ${{ inputs.ref }}
 
   - name: Setup Spack
-    run: echo "$PWD/spack/bin" >> "$GITHUB_PATH"
-    shell: sh
-
-  - name: Setup build cache
-    if: ${{ inputs.buildcache == 'true' }}
-    run: spack mirror add github-actions-buildcache oci://ghcr.io/spack/github-actions-buildcache
+    run: |
+      echo "$PWD/spack/bin" >> "$GITHUB_PATH"
+      [ "${{ inputs.color }}" = "true" ] && echo "SPACK_COLOR=always" >> "$GITHUB_ENV"
+      if [ ${{ inputs.buildcache }} = "true" ]; then
+        spack mirror add github-actions-buildcache oci://ghcr.io/spack/github-actions-buildcache
+      fi
     shell: sh
