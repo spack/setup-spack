@@ -18,12 +18,23 @@ jobs:
           buildcache: true  # Configure oci://ghcr.io/spack/github-actions-buildcache
           color: true       # Force color output (SPACK_COLOR=always)
           path: spack       # Where to clone Spack
-      - run: |
-        spack --version
-        spack install python
+      - run: spack install --no-check-signature --reuse python
 ```
 
-## Caching your own binaries
+## Using prebuilt binaries
+
+When `buildcache: true` is set, binaries from https://github.com/spack/github-actions-buildcache
+are reused.
+
+These binaries are unsigned, so you have to specify `install --no-check-signature`.
+
+## Shell support
+
+This action does not enable shell support, so you can't use `spack load` directly.
+
+Consider using environment views instead.
+
+## Using your own build cache
 
 See https://github.com/spack/github-actions-buildcache for details on how to cache binaries you've
 built yourself.
