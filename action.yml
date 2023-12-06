@@ -1,5 +1,9 @@
 name: "Setup Spack"
+author: "haampie"
 description: "Setup Spack"
+branding:
+  icon: "package"
+  color: "blue"
 inputs:
   ref:
     description: "Version of Spack (git ref: develop, releases/v0.21, ...)"
