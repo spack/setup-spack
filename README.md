@@ -52,7 +52,7 @@ spack:
     local-buildcache: oci://ghcr.io/<username>/spack-buildcache
 ```
 
-Then configure a GitHub Actions like this:
+Then configure an action like this:
 
 ```yaml
 jobs:
