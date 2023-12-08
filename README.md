@@ -109,11 +109,20 @@ subsequent job step. (This is no different from `docker login`, which also likes
 to store credentials in the home directory.)
 
 
-## Shell support
+## Example: shell support
 
-This action currently does not enable shell support, so you can't use `spack load` directly.
+If you want to use shell-aware commands such as `spack env activate` and `spack load`,
+use the `shell: spack-bash {0}` or `shell: spack-sh {0}` in your action:
 
-Environment views are recommended instead.
+```yaml
+- name: Shell example
+  shell: spack-bash {0}
+  run: |
+    spack env activate .
+    spack env status
+```
+
+These "shells" are small wrappers that run `. setup-env.sh` before executing your script.
 
 ## License
 
