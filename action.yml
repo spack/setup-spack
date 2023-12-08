@@ -49,7 +49,9 @@ runs:
       cat > ${{ inputs.path }}/bin/spack-bash <<EOF
       #!/bin/bash
       set -e -o pipefail
-      SPACK_ROOT="$(realpath ${{ inputs.path }})" . "$(realpath ${{ inputs.path }})/share/spack/setup-env.sh"
+      export SPACK_ROOT="$(realpath ${{ inputs.path }})"
+      . "$(realpath ${{ inputs.path }})/share/spack/setup-env.sh"
+      unset SPACK_ROOT
       . "\$1"
       EOF
       chmod +x ${{ inputs.path }}/bin/spack-bash
