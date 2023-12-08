@@ -10,7 +10,6 @@ jobs:
   build:
     runs-on: ubuntu-22.04
     steps:
-    - uses: actions/checkout@v4
     - name: Set up Spack
       uses: spack/setup-spack@v2
       with:
