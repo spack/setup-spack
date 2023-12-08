@@ -47,7 +47,8 @@ runs:
   - name: Create Spack bash shell
     run: |
       cat > ${{ inputs.path }}/bin/spack-bash <<EOF
-      #!/bin/bash -e -o pipefail
+      #!/bin/bash
+      set -e -o pipefail
       . "$(realpath ${{ inputs.path }})/share/spack/setup-env.sh"
       . "\$1"
       EOF
