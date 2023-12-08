@@ -25,6 +25,21 @@ are used. For available software, [see here](https://github.com/spack/github-act
 
 These binaries are unsigned, so you have to specify `install --no-check-signature`.
 
+## Example: shell support
+
+If you want to use shell-aware commands such as `spack env activate` and `spack load`,
+use either `shell: spack-bash {0}` or `shell: spack-sh {0}` in your action:
+
+```yaml
+- name: Shell example
+  shell: spack-bash {0}
+  run: |
+    spack env activate .
+    spack env status
+```
+
+These "shells" are small wrappers that run `. setup-env.sh` before executing your script.
+
 ## Example: caching your own binaries for public repositories
 
 When you need to install packages not available in the default build cache, you can build them
@@ -35,7 +50,7 @@ repository:
 
 ```yaml
 spack:
-  view: my_view
+  view: view
   specs:
   - python@3.11
 
@@ -71,7 +86,10 @@ jobs:
       run: spack -e . install --no-check-signature
 
     - name: Run
-        run: ./my_view/bin/python3 -c 'print("hello world")'
+      shell: spack-bash
+      run: |
+        spack env activate .
+        python3 -c 'print("hello world")'
 
     - name: Push packages and update index
       run: |
@@ -107,22 +125,6 @@ credentials too:
 From a security perspective, notice that the `GITHUB_TOKEN` is exposed to every
 subsequent job step. (This is no different from `docker login`, which also likes
 to store credentials in the home directory.)
-
-
-## Example: shell support
-
-If you want to use shell-aware commands such as `spack env activate` and `spack load`,
-use either `shell: spack-bash {0}` or `shell: spack-sh {0}` in your action:
-
-```yaml
-- name: Shell example
-  shell: spack-bash {0}
-  run: |
-    spack env activate .
-    spack env status
-```
-
-These "shells" are small wrappers that run `. setup-env.sh` before executing your script.
 
 ## License
 
