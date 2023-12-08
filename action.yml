@@ -50,6 +50,6 @@ runs:
       #!/bin/bash -e -o pipefail
       . "$(realpath ${{ inputs.path }})/share/spack/setup-env.sh"
       . "$1"
-      EOF && chmod +x ${{ inputs.path }}/bin/spack-bash
-      cat ${{ inputs.path }}/bin/spack-bash
+      EOF
+      chmod +x ${{ inputs.path }}/bin/spack-bash
     shell: sh
