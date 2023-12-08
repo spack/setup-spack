@@ -21,7 +21,7 @@ jobs:
 ```
 
 When `buildcache: true` is set, binaries from https://github.com/spack/github-actions-buildcache
-are reused. For available software, [see here](https://github.com/spack/github-actions-buildcache/blob/main/spack.yaml).
+are used. For available software, [see here](https://github.com/spack/github-actions-buildcache/blob/main/spack.yaml).
 
 These binaries are unsigned, so you have to specify `install --no-check-signature`.
 
