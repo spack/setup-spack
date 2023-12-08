@@ -112,7 +112,7 @@ to store credentials in the home directory.)
 ## Example: shell support
 
 If you want to use shell-aware commands such as `spack env activate` and `spack load`,
-use the `shell: spack-bash {0}` or `shell: spack-sh {0}` in your action:
+use either `shell: spack-bash {0}` or `shell: spack-sh {0}` in your action:
 
 ```yaml
 - name: Shell example
