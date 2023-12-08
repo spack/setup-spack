@@ -1,4 +1,4 @@
-# Setup Spack in Github Actions
+# Setup Spack in GitHub Actions
 
 Set up the [Spack package manager](https://github.com/spack/spack) with a default build cache to
 speed up your actions.

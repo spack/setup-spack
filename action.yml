@@ -10,7 +10,7 @@ inputs:
     required: false
     default: develop
   buildcache:
-    description: "Enable the Github Action build cache"
+    description: "Enable the GitHub Action build cache"
     required: false
     default: "true"
   color:
