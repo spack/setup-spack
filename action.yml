@@ -49,7 +49,7 @@ runs:
       cat > ${{ inputs.path }}/bin/spack-bash <<EOF
       #!/bin/bash -e -o pipefail
       . "$(realpath ${{ inputs.path }})/share/spack/setup-env.sh"
-      . "$1"
+      . "\$1"
       EOF
       chmod +x ${{ inputs.path }}/bin/spack-bash
     shell: sh
