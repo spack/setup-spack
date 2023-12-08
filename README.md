@@ -89,8 +89,6 @@ remove the `--push` flag from `spack mirror set`, since fetching needs
 credentials too:
 
 ```yaml
-jobs:
-  example-private:
     steps:
     - name: Login
       run: spack -e . mirror set --oci-username ${{ github.actor }} --oci-password "${{ secrets.GITHUB_TOKEN }}" local-buildcache
