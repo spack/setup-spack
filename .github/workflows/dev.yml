@@ -26,13 +26,14 @@ jobs:
     - name: Check build cache config
       run: spack config blame mirrors
     - name: Check spack-bash shell
+      shell: spack-bash {0}
       run: |
         spack env activate
         spack env status
     - name: Check spack-sh shell
+      shell: spack-sh {0}
       run: |
         spack env activate
         spack env status
-      shell: spack-sh {0}
     - name: Test install from build cache
       run: spack install --reuse --no-check-signature --cache-only python
