@@ -118,11 +118,6 @@ This action currently does not enable shell support, so you can't use `spack loa
 
 Environment views are recommended instead.
 
-## Using your own build cache
-
-See https://github.com/spack/github-actions-buildcache for details on how to cache binaries you've
-built yourself.
-
 ## License
 
 This project is part of Spack. Spack is distributed under the terms of both the
