@@ -22,5 +22,12 @@ jobs:
         buildcache: true
         color: true
     - run: spack --version
-    - run: spack config blame mirrors
-    - run: spack install --reuse --no-check-signature --cache-only python
+    - name: Check if config is correct
+      run: spack config blame mirrors
+    - name: Test install from build cache
+      run: spack install --reuse --no-check-signature --cache-only python
+    - name: Check if spack-bash shell works
+      run: |
+        spack env activate
+        spack env status
+      shell: spack-bash

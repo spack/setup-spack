@@ -43,3 +43,12 @@ runs:
         spack mirror add github-actions-buildcache oci://ghcr.io/spack/github-actions-buildcache
       fi
     shell: sh
+
+  - name: Create Spack bash shell
+    run: |
+      cat > ${{ inputs.path }}/bin/spack-bash <<EOF
+      #!/bin/bash -e -o pipefail
+      . ${{ inputs.path }}/share/spack/setup-env.sh
+      . "$1"
+      EOF && chmod +x ${{ inputs.path }}/bin/spack-bash
+    shell: sh
