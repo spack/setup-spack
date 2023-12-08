@@ -54,3 +54,13 @@ runs:
       EOF
       chmod +x ${{ inputs.path }}/bin/spack-bash
     shell: sh
+
+  - name: Create Spack sh shell
+    run: |
+      cat > ${{ inputs.path }}/bin/spack-sh <<EOF
+      #!/bin/sh -e
+      . "$(realpath ${{ inputs.path }})/share/spack/setup-env.sh"
+      . "\$1"
+      EOF
+      chmod +x ${{ inputs.path }}/bin/spack-sh
+    shell: sh
