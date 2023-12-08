@@ -21,13 +21,14 @@ jobs:
         ref: ${{ matrix.ref }}
         buildcache: true
         color: true
-    - run: spack --version
-    - name: Check if config is correct
-      run: spack config blame mirrors
-    - name: Test install from build cache
-      run: spack install --reuse --no-check-signature --cache-only python
+    - name: Version check
+      run: spack --version
     - name: Check if spack-bash shell works
       run: |
         spack env activate
         spack env status
-      shell: spack-bash
+      shell: spack-bash {0}
+    - name: Check if config is correct
+      run: spack config blame mirrors
+    - name: Test install from build cache
+      run: spack install --reuse --no-check-signature --cache-only python
