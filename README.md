@@ -82,9 +82,9 @@ jobs:
 
 ## Example: caching your own binaries for private repositories
 
-When your local buildcache is stored in a private GitHub package,
+When your local build cache is stored in a private GitHub package,
 you need to specify the OCI credentials already *before* `spack concretize`.
-This is because Spack needs to fetch the buildcache index. Also, remember to
+This is because Spack needs to fetch the index of the build cache. Also, remember to
 remove the `--push` flag from `spack mirror set`, since fetching needs
 credentials too:
 
