@@ -21,6 +21,10 @@ jobs:
         ref: ${{ matrix.ref }}
         buildcache: true
         color: true
+    - name: Debugging
+      run: |
+        which spack-bash
+        cat $(which spack-bash)
     - name: Version check
       run: spack --version
     - name: Check if spack-bash shell works
