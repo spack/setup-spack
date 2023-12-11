@@ -35,6 +35,7 @@ runs:
     run: |
       echo "$(realpath ${{ inputs.path }}/bin)" >> "$GITHUB_PATH"
       [ "${{ inputs.color }}" = "true" ] && echo "SPACK_COLOR=always" >> "$GITHUB_ENV"
+      echo "SPACK_DISABLE_LOCAL_CONFIG=1" >> "$GITHUB_ENV"
     shell: sh
 
   - name: Spack configuration
