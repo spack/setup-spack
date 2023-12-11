@@ -17,13 +17,20 @@ jobs:
         buildcache: true  # Configure oci://ghcr.io/spack/github-actions-buildcache
         color: true       # Force color output (SPACK_COLOR=always)
         path: spack       # Where to clone Spack
-    - run: spack install --no-check-signature --reuse python
+    - run: spack install python
 ```
 
 When `buildcache: true` is set, binaries from https://github.com/spack/github-actions-buildcache
 are used. For available software, [see here](https://github.com/spack/github-actions-buildcache/blob/main/spack.yaml).
 
-These binaries are unsigned, so you have to specify `install --no-check-signature`.
+**Note**: when using the build cache with Spack v0.21 and below, the following flag is
+required:
+
+```
+spack install --no-check-signature
+```
+
+This flag is no longer required in Spack v0.22.
 
 ## Example: shell support
 

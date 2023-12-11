@@ -40,6 +40,8 @@ runs:
   - name: Spack configuration
     run: |
       if [ ${{ inputs.buildcache }} = "true" ]; then
+        # Spack 0.22 should support the --unsigned flag
+        spack mirror add --unsigned github-actions-buildcache oci://ghcr.io/spack/github-actions-buildcache || \
         spack mirror add github-actions-buildcache oci://ghcr.io/spack/github-actions-buildcache
       fi
     shell: sh
