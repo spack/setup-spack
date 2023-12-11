@@ -71,7 +71,9 @@ spack:
       require: 'target=x86_64_v2'
 
   mirrors:
-    local-buildcache: oci://ghcr.io/<username>/spack-buildcache
+    local-buildcache:
+      url: oci://ghcr.io/<username>/spack-buildcache
+      signed: false
 ```
 
 Then configure an action like this:
@@ -101,7 +103,7 @@ jobs:
     - name: Push packages and update index
       run: |
         spack -e . mirror set --push --oci-username ${{ github.actor }} --oci-password "${{ secrets.GITHUB_TOKEN }}" local-buildcache
-        spack -e . buildcache push --base-image ubuntu:22.04 --unsigned --update-index local-buildcache
+        spack -e . buildcache push --base-image ubuntu:22.04 --update-index local-buildcache
       if: ${{ !cancelled() }}
 ```
 
@@ -125,7 +127,7 @@ credentials too:
       run: spack -e . install --no-check-signature
 
     - name: Push packages and update index
-      run: spack -e . buildcache push --base-image ubuntu:22.04 --unsigned --update-index local-buildcache
+      run: spack -e . buildcache push --base-image ubuntu:22.04 --update-index local-buildcache
       if: ${{ !cancelled() }}
 ```
 
