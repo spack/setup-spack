@@ -45,7 +45,7 @@ jobs:
         spack install --add --cache-only --reuse --no-check-signature python
         which python3
         python3 -c 'print("hello world")'
-      if: matrix.ref == 'develop'
+      if: matrix.ref == 'releases/v0.21'
 
     - name: Check spack-sh shell
       shell: spack-sh {0}
