@@ -68,7 +68,7 @@ spack:
 
   packages:
     all:
-      require: 'target=x86_64_v2'
+      require: 'target=x86_64_v3'
 
   mirrors:
     local-buildcache:
