@@ -57,7 +57,7 @@ repository:
 
 ```yaml
 spack:
-  view: view
+  view: /opt/view
   specs:
   - python@3.11
 
