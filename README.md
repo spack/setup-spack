@@ -13,7 +13,7 @@ jobs:
     - name: Set up Spack
       uses: spack/setup-spack@v2
       with:
-        ref: develop      # Spack version (examples: develop, releases/v0.21)
+        ref: develop      # Spack version (examples: develop, releases/v0.23)
         buildcache: true  # Configure oci://ghcr.io/spack/github-actions-buildcache
         color: true       # Force color output (SPACK_COLOR=always)
         path: spack       # Where to clone Spack
@@ -22,15 +22,6 @@ jobs:
 
 When `buildcache: true` is set, binaries from https://github.com/spack/github-actions-buildcache
 are used. For available software, [see here](https://github.com/spack/github-actions-buildcache/blob/main/spack.yaml).
-
-**Note**: when using the build cache with Spack v0.21 and below, the following flag is
-required:
-
-```
-spack install --no-check-signature
-```
-
-This flag is no longer required in Spack v0.22.
 
 ## Example: shell support
 
