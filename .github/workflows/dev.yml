@@ -29,14 +29,13 @@ jobs:
     - name: Check build cache config
       run: spack config blame mirrors
 
-    - name: Check build cache install in active env with spack-bash shell (new style)
+    - name: Check build cache install in active env with spack-bash shell
       shell: spack-bash {0}
       run: |
         spack env activate
         spack install --add --cache-only --reuse python
         which python3
         python3 -c 'print("hello world")'
-      if: matrix.ref == 'develop'
 
     - name: Check spack-sh shell
       shell: spack-sh {0}
