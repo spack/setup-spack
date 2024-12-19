@@ -64,7 +64,11 @@ spack:
   mirrors:
     local-buildcache:
       url: oci://ghcr.io/<username>/spack-buildcache
+      binary: true
       signed: false
+      access_pair:
+        id_variable: GITHUB_USER
+        secret_variable: GITHUB_TOKEN
 ```
 
 Then configure an action like this:
@@ -83,7 +87,7 @@ jobs:
       uses: spack/setup-spack@v2
     
     - name: Install
-      run: spack -e . install --no-check-signature
+      run: spack -e . install
 
     - name: Run
       shell: spack-bash
@@ -92,39 +96,39 @@ jobs:
         python3 -c 'print("hello world")'
 
     - name: Push packages and update index
-      run: |
-        spack -e . mirror set --push --oci-username ${{ github.actor }} --oci-password "${{ secrets.GITHUB_TOKEN }}" local-buildcache
-        spack -e . buildcache push --base-image ubuntu:22.04 --update-index local-buildcache
+      env:
+        GITHUB_USER: ${{ github.actor }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: spack -e . buildcache push --base-image ubuntu:22.04 --update-index local-buildcache
       if: ${{ !cancelled() }}
 ```
 
 ## Example: caching your own binaries for private repositories
 
-When your local build cache is stored in a private GitHub package,
+When your local buildcache is stored in a private GitHub package,
 you need to specify the OCI credentials already *before* `spack concretize`.
-This is because Spack needs to fetch the index of the build cache. Also, remember to
-remove the `--push` flag from `spack mirror set`, since fetching needs
-credentials too:
+This is because Spack needs to fetch the buildcache index.
 
 ```yaml
-    steps:
-    - name: Login
-      run: spack -e . mirror set --oci-username ${{ github.actor }} --oci-password "${{ secrets.GITHUB_TOKEN }}" local-buildcache
+env:
+  GITHUB_USER: ${{ github.actor }}
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+jobs:
+  example-private:
+    steps:
     - name: Concretize
       run: spack -e . concretize
 
     - name: Install
-      run: spack -e . install --no-check-signature
+      run: spack -e . install
 
     - name: Push packages and update index
       run: spack -e . buildcache push --base-image ubuntu:22.04 --update-index local-buildcache
-      if: ${{ !cancelled() }}
 ```
 
-From a security perspective, notice that the `GITHUB_TOKEN` is exposed to every
-subsequent job step. (This is no different from `docker login`, which also likes
-to store credentials in the home directory.)
+From a security perspective, do note that the `GITHUB_TOKEN` is exposed to every
+job step.
 
 ## License
 
