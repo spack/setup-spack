@@ -12,7 +12,7 @@ jobs:
       matrix:
         ref:
         - develop
-        - releases/v0.21
+        - releases/v0.23
     steps:
     - uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633
 
@@ -29,23 +29,13 @@ jobs:
     - name: Check build cache config
       run: spack config blame mirrors
 
-    - name: Check build cache install in active env with spack-bash shell (new style)
+    - name: Check build cache install in active env with spack-bash shell
       shell: spack-bash {0}
       run: |
         spack env activate
         spack install --add --cache-only --reuse python
         which python3
         python3 -c 'print("hello world")'
-      if: matrix.ref == 'develop'
-
-    - name: Check build cache install in active env with spack-bash shell (old style)
-      shell: spack-bash {0}
-      run: |
-        spack env activate
-        spack install --add --cache-only --reuse --no-check-signature python
-        which python3
-        python3 -c 'print("hello world")'
-      if: matrix.ref == 'releases/v0.21'
 
     - name: Check spack-sh shell
       shell: spack-sh {0}
