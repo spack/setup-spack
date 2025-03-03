@@ -90,7 +90,7 @@ jobs:
       run: spack -e . install
 
     - name: Run
-      shell: spack-bash
+      shell: spack-bash {0}
       run: |
         spack env activate .
         python3 -c 'print("hello world")'
