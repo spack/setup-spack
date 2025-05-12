@@ -3,6 +3,16 @@
 Set up the [Spack package manager](https://github.com/spack/spack) with a default build cache to
 speed up your actions.
 
+## Options
+
+| Name        | Description                          | Default        |
+|-------------|--------------------------------------|----------------|
+| `ref`       | Version of Spack                     | `"develop"`    |
+| `buildcache`| Enable the GitHub Action build cache | `true`         |
+| `color`     | Force color output                   | `true`         |
+| `path`      | Path to install Spack to             | `"spack"`      |
+| `repository`| GitHub repository for Spack          | `"spack/spack"`|
+
 ## Example: basic setup
 
 ```yaml
@@ -82,10 +92,10 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v4
-    
+
     - name: Set up Spack
       uses: spack/setup-spack@v2
-    
+
     - name: Install
       run: spack -e . install
 
