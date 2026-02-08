@@ -5,20 +5,22 @@ speed up your actions.
 
 ## Options
 
-| Name                  | Description                                      | Default                  |
+| Name                  | Description                                      | Default                 |
 |-----------------------|--------------------------------------------------|-------------------------|
-| `spack_ref`           | Version of Spack                                 | `"develop"`             |
+| `spack_ref`           | Version of Spack tool                            | `"develop"`             |
+| `packages_ref`        | Version of Spack packages                        | `"develop"`             |
 | `buildcache`          | Enable the GitHub Action build cache             | `true`                  |
 | `color`               | Force color output                               | `true`                  |
-| `path`                | Path to install Spack to                         | `"spack"`               |
-| `repository`          | GitHub repository for Spack                      | `"spack/spack"`         |
+| `spack_path`          | Path to install Spack to                         | `"./spack"`             |
+| `packages_path`       | Path to install Spack packages repository        | `"./spack-packages"`    |
+| `spack_repository`    | GitHub repository for Spack                      | `"spack/spack"`         |
 | `packages_repository` | GitHub repository for Spack packages             | `"spack/spack-packages"`|
-| `packages_path`       | Path to install Spack packages repository        | `"spack-packages"`      |
-| `packages_ref`        | Version of Spack packages                        | `"develop"`             |
 
 ## How It Works
 
 Spack v1.x uses separate repositories: `spack/spack` (the core) and `spack/spack-packages` (the package repository). This action automatically clones both repositories and configures them using `spack repo set --destination <clone dir> builtin`.
+
+**Version independence**: The `spack_ref` and `packages_ref` are independently versioned. The core Spack tool follows a release cycle (e.g., `releases/v1.0`), while the packages repository has its own versioning (e.g., `v2025.11.0`). Use different refs when you need a specific package version with a specific Spack version.
 
 ## Example: basic setup
 
@@ -28,12 +30,39 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
     - name: Set up Spack
-      uses: spack/setup-spack@v2
+      uses: spack/setup-spack@v3
       with:
-        spack_ref: develop      # Spack version (examples: develop, releases/v1.0)
-        buildcache: true        # Configure oci://ghcr.io/spack/github-actions-buildcache
-        color: true       # Force color output (SPACK_COLOR=always)
-        path: spack       # Where to clone Spack
+        buildcache: true
+    - run: spack install python
+```
+
+## Example: specific versions
+
+To use specific versions of Spack and/or packages:
+
+```yaml
+    - name: Set up Spack
+      uses: spack/setup-spack@v3
+      with:
+        spack_ref: releases/v1.0
+        packages_ref: v2025.11.0
+        buildcache: true
+    - run: spack install python
+```
+
+## Example: using a fork
+
+To test changes in your own Spack or packages fork:
+
+```yaml
+    - name: Set up Spack
+      uses: spack/setup-spack@v3
+      with:
+        spack_repository: myorg/spack
+        spack_ref: my-feature-branch
+        packages_repository: spack/spack-packages  # Use official packages
+        packages_ref: develop
+        buildcache: true
     - run: spack install python
 ```
 
@@ -101,7 +130,7 @@ jobs:
       uses: actions/checkout@v4
 
     - name: Set up Spack
-      uses: spack/setup-spack@v2
+      uses: spack/setup-spack@v3
 
     - name: Install
       run: spack -e . install
@@ -134,6 +163,9 @@ env:
 jobs:
   example-private:
     steps:
+    - name: Set up Spack
+      uses: spack/setup-spack@v3
+
     - name: Concretize
       run: spack -e . concretize
 

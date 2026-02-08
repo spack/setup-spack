@@ -8,18 +8,24 @@ on:
 jobs:
   test:
     runs-on: ubuntu-22.04
+    permissions:
+      contents: read
     strategy:
       matrix:
-        spack_ref:
-        - develop
-        - releases/v1.0
+        include:
+        - spack_ref: develop
+          packages_ref: develop
+        - spack_ref: releases/v1.0
+          packages_ref: v2025.11.0
     steps:
-    - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+    - name: Checkout
+      uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
     - name: Set up Spack
       uses: ./
       with:
         spack_ref: ${{ matrix.spack_ref }}
+        packages_ref: ${{ matrix.packages_ref }}
         buildcache: true
         color: true
 

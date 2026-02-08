@@ -3,6 +3,8 @@
 ## v3.0.0
 
 - **BREAKING**: Renamed `ref` input to `spack_ref` for clarity
+- **BREAKING**: Renamed `repository` input to `spack_repository` for consistency
+- **BREAKING**: Renamed `path` input to `spack_path` for consistency
 - Support Spack v1.x with separate `spack/spack` and `spack/spack-packages` repositories
 - Added new inputs: `packages_ref`, `packages_repository`, and `packages_path`
 - Automatically clones and configures the packages repository using `spack repo set`
