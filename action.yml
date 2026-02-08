@@ -46,6 +46,8 @@ runs:
       repository: ${{ inputs.spack_repository }}
       path: ${{ inputs.spack_path }}
       ref: ${{ inputs.spack_ref }}
+      fetch-depth: 1
+      persist-credentials: false
 
   - name: Checkout Spack packages
     uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -53,6 +55,8 @@ runs:
       repository: ${{ inputs.packages_repository }}
       path: ${{ inputs.packages_path }}
       ref: ${{ inputs.packages_ref }}
+      fetch-depth: 1
+      persist-credentials: false
 
   - name: Spack environment variables
     run: |
