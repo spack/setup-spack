@@ -35,6 +35,9 @@ jobs:
     - name: Check build cache config
       run: spack config blame mirrors
 
+    - name: Check packages repository config
+      run: spack config blame repos
+
     - name: Check build cache install in active env with spack-bash shell
       shell: spack-bash {0}
       run: |
