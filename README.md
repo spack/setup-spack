@@ -5,13 +5,20 @@ speed up your actions.
 
 ## Options
 
-| Name        | Description                          | Default        |
-|-------------|--------------------------------------|----------------|
-| `ref`       | Version of Spack                     | `"develop"`    |
-| `buildcache`| Enable the GitHub Action build cache | `true`         |
-| `color`     | Force color output                   | `true`         |
-| `path`      | Path to install Spack to             | `"spack"`      |
-| `repository`| GitHub repository for Spack          | `"spack/spack"`|
+| Name                  | Description                                      | Default                  |
+|-----------------------|--------------------------------------------------|-------------------------|
+| `spack_ref`           | Version of Spack                                 | `"develop"`             |
+| `buildcache`          | Enable the GitHub Action build cache             | `true`                  |
+| `color`               | Force color output                               | `true`                  |
+| `path`                | Path to install Spack to                         | `"spack"`               |
+| `repository`          | GitHub repository for Spack                      | `"spack/spack"`         |
+| `packages_repository` | GitHub repository for Spack packages             | `"spack/spack-packages"`|
+| `packages_path`       | Path to install Spack packages repository        | `"spack-packages"`      |
+| `packages_ref`        | Version of Spack packages                        | `"develop"`             |
+
+## How It Works
+
+Spack v1.x uses separate repositories: `spack/spack` (the core) and `spack/spack-packages` (the package repository). This action automatically clones both repositories and configures them using `spack repo set --destination <clone dir> builtin`.
 
 ## Example: basic setup
 
@@ -23,8 +30,8 @@ jobs:
     - name: Set up Spack
       uses: spack/setup-spack@v2
       with:
-        ref: develop      # Spack version (examples: develop, releases/v0.23)
-        buildcache: true  # Configure oci://ghcr.io/spack/github-actions-buildcache
+        spack_ref: develop      # Spack version (examples: develop, releases/v1.0)
+        buildcache: true        # Configure oci://ghcr.io/spack/github-actions-buildcache
         color: true       # Force color output (SPACK_COLOR=always)
         path: spack       # Where to clone Spack
     - run: spack install python

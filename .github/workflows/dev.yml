@@ -10,16 +10,16 @@ jobs:
     runs-on: ubuntu-22.04
     strategy:
       matrix:
-        ref:
+        spack_ref:
         - develop
-        - releases/v0.23
+        - releases/v1.0
     steps:
     - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
 
     - name: Set up Spack
       uses: ./
       with:
-        ref: ${{ matrix.ref }}
+        spack_ref: ${{ matrix.spack_ref }}
         buildcache: true
         color: true
 

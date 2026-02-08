@@ -5,8 +5,12 @@ branding:
   icon: "package"
   color: "blue"
 inputs:
-  ref:
-    description: "Version of Spack (git ref: develop, releases/v0.23, ...)"
+  spack_ref:
+    description: "Version of Spack (git ref: develop, releases/v1.1, ...)"
+    required: false
+    default: develop
+  packages_ref:
+    description: "Version of Spack packages (git ref: develop, releases/v1.1, ...)"
     required: false
     default: develop
   buildcache:
@@ -25,6 +29,14 @@ inputs:
     description: "GitHub repository where Spack or its fork lives"
     required: false
     default: "spack/spack"
+  packages_repository:
+    description: "GitHub repository of the Spack packages repository"
+    required: false
+    default: "spack/spack-packages"
+  packages_path:
+    description: "Path to install Spack packages repository"
+    required: false
+    default: "spack-packages"
 runs:
   using: "composite"
   steps:
@@ -33,7 +45,14 @@ runs:
     with:
       repository: ${{ inputs.repository }}
       path: ${{ inputs.path }}
-      ref: ${{ inputs.ref }}
+      ref: ${{ inputs.spack_ref }}
+
+  - name: Checkout Spack packages
+    uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+    with:
+      repository: ${{ inputs.packages_repository }}
+      path: ${{ inputs.packages_path }}
+      ref: ${{ inputs.packages_ref }}
 
   - name: Spack environment variables
     run: |
@@ -47,6 +66,8 @@ runs:
       if [ ${{ inputs.buildcache }} = "true" ]; then
         spack mirror add --unsigned github-actions-buildcache oci://ghcr.io/spack/github-actions-buildcache
       fi
+      # Configure separate packages repository
+      spack repo set --destination "$(realpath ${{ inputs.packages_path }})" builtin
     shell: sh
 
   - name: Create Spack bash shell
