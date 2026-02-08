@@ -18,9 +18,9 @@ speed up your actions.
 
 ## How It Works
 
-Spack v1.x uses separate repositories: `spack/spack` (the core) and `spack/spack-packages` (the package repository). This action automatically clones both repositories and configures them using `spack repo set --destination <clone dir> builtin`.
+The action sets up Spack the tool (`spack/spack`) and the package repository (`spack/spack-packages`). 
 
-**Version independence**: The `spack_ref` and `packages_ref` are independently versioned. The core Spack tool follows a release cycle (e.g., `releases/v1.0`), while the packages repository has its own versioning (e.g., `v2025.11.0`). Use different refs when you need a specific package version with a specific Spack version.
+Notice that `spack_ref` and `packages_ref` are independently versioned. The Spack tool follows a release cycle (e.g., `releases/v1.0`), while the packages repository has its own versioning (e.g., `v2025.11.0`).
 
 ## Example: basic setup
 
@@ -35,6 +35,9 @@ jobs:
         buildcache: true
     - run: spack install python
 ```
+
+When `buildcache: true` is set, binaries from https://github.com/spack/github-actions-buildcache
+are used. For available software, [see here](https://github.com/spack/github-actions-buildcache/blob/main/spack.yaml).
 
 ## Example: specific versions
 
@@ -65,9 +68,6 @@ To test changes in your own Spack or packages fork:
         buildcache: true
     - run: spack install python
 ```
-
-When `buildcache: true` is set, binaries from https://github.com/spack/github-actions-buildcache
-are used. For available software, [see here](https://github.com/spack/github-actions-buildcache/blob/main/spack.yaml).
 
 ## Example: shell support
 
